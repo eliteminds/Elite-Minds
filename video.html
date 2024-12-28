@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Elite Minds - Video Viewer</title>
+        <meta name="google" content="notranslate"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+        <style>
+            /* Global Styles */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #000000;
+                color: #ffffff;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                min-height: 100vh;
+            }
+
+            /* Header */
+            .header {
+                width: 100%;
+                background-color: #1e1e1e;
+                padding: 15px 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            }
+
+            .header-logo {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: #00e0ac;
+                cursor: pointer;
+            }
+
+            .header-icons button {
+                background: none;
+                border: none;
+                color: #ffffff;
+                font-size: 1.2rem;
+                cursor: pointer;
+                margin-left: 10px;
+                transition: color 0.3s ease;
+            }
+
+            .header-icons button:hover {
+                color: #00e0ac;
+            }
+
+            /* Video Container */
+            .video-container {
+                max-width: 900px;
+                width: 90%;
+                margin-top: 20px;
+                padding: 20px;
+                border-radius: 12px;
+                background-color: #222222;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            }
+
+            .video-player {
+                position: relative;
+                border-radius: 12px;
+                overflow: hidden;
+            }
+
+            .video-player iframe {
+                width: 100%;
+                height: 500px;
+                border: none;
+            }
+
+            /* Notepad */
+            .notepad {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                width: 320px;
+                background: #1e1e1e;
+                border-radius: 12px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+                transition: all 0.4s ease;
+                overflow: hidden;
+                z-index: 1000;
+            }
+
+            .notepad.fullscreen {
+                width: 100%;
+                height: 100%;
+                bottom: 0;
+                right: 0;
+                border-radius: 0;
+            }
+
+            .notepad-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: #1e1e1e;
+                color: #ffffff;
+                padding: 12px 15px;
+            }
+
+            .notepad-header button {
+                background: none;
+                border: none;
+                color: #ffffff;
+                font-size: 1.2rem;
+                cursor: pointer;
+            }
+
+            .notepad-header button:hover {
+                color: #4caf50;
+            }
+
+            .notepad-body {
+                padding: 15px;
+                background-color: #171718;
+            }
+
+            .notepad-body textarea {
+                width: 100%;
+                height: 200px;
+                font-size: 1rem;
+                background: #222;
+                color: #ffffff;
+                border: none;
+                resize: none;
+                border-radius: 8px;
+                padding: 10px;
+                outline: none;
+                box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+            }
+
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .video-player iframe {
+                    height: 300px;
+                }
+
+                .notepad {
+                    width: 94%;
+                    bottom: 3rem;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .video-container {
+                    width: 100%;
+                    margin: 3px;
+                    padding: 0;
+                    border-radius: 2px;
+                }
+
+                .video-player {
+                    border-radius: 2px;
+                }
+
+                .header-logo {
+                    display: none;
+                }
+
+                .header {
+                    padding: 5px 20px;
+                    position: sticky;
+                    margin: 0;
+                    background: #000000;
+                }
+
+                .notepad {
+                    position: sticky;
+                    height: 365px;
+                    margin-top: 28px;
+                    width: 100%;
+                    border-radius: 0 0 12px 12px;
+                }
+
+                .notepad-body {
+                    padding: 13px;
+                    background-color: #151516;
+                }
+
+                .notepad-body textarea {
+                    height: 292px;
+                }
+
+                .notepad.fullscreen {
+                    height: 100vh;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Header -->
+        <header class="header">
+            <div class="header-logo" id="fullscreenButton">Elite🌟Minds</div>
+            <div class="header-icons">
+                <button id="back-btn-video" aria-label="Go Back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+            </div>
+        </header>
+        <!-- Video Container -->
+        <div class="video-container">
+            <div class="video-player" id="video-player"></div>
+        </div>
+        <!-- Notepad -->
+        <div id="notepad" class="notepad">
+            <div class="notepad-header">
+                <span>Notes</span>
+                <div>
+                    <button id="save-note" aria-label="Save Note">
+                        <i class="fas fa-save"></i>
+                    </button>
+                    <button id="toggle-notepad" aria-label="Toggle Notepad">
+                        <i class="fas fa-chevron-up"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="notepad-body">
+                <textarea id="note" placeholder="Type your note here..."></textarea>
+            </div>
+        </div>
+        <script src="video.js"></script>
+        <script src="./util.js"></script>
+
+</body>
+</html>
