@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container-of-contact">
+        <div class="tabs-contact">
+            <div class="tab-contact" onclick="openTab(event, 'nonAcademy')">Issue On App</div>
+            <div class="tab-contact" onclick="openTab(event, 'academy')">Doubt On Study</div>
+        </div>
+
+        <div class="tab-content-contact">
+            <!-- Non-Academy Form -->
+            <div id="nonAcademy" class="tab-pane-contact">
+                <!-- <h2>Contact Us - Non-Academy</h2> -->
+                <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
+
+                    <input type="hidden" name="access_key" value="6b36ecc7-f184-4419-9398-b8aeaa482b07">
+
+                    <label for="name">Your Name:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Your Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+
+            <!-- Academy Form -->
+            <div id="academy" class="tab-pane-contact">
+                <!-- <h2>Contact Us - Academy</h2> -->
+                <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
+                    <input type="hidden" name="access_key" value="b21ecd54-89d6-4608-b2df-a2b21c4cbb00">
+
+                    <label for="studentName">Your Name:</label>
+                    <input type="text" id="studentName" name="studentName" required>
+
+                    <label for="studentEmail">Your Email:</label>
+                    <input type="email" id="studentEmail" name="studentEmail" required>
+
+                    <label for="studentMessage">Message:</label>
+                    <textarea id="studentMessage" name="studentMessage" rows="4" required></textarea>
+
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
